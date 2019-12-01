@@ -1,10 +1,7 @@
-
 pub fn fuel_cost(mass: u64) -> u64 {
-    mass
+    let fuel = mass / 3 - 2;
+    fuel
 }
-
-
-
 
 #[cfg(test)]
 mod tests {
