@@ -1,6 +1,17 @@
-pub fn fuel_cost(mass: u64) -> u64 {
-    let fuel = mass / 3 - 2;
-    fuel
+
+
+pub fn fuel_cost(mass: i64) -> i64 {
+    if mass <= 0 {
+         0
+    } else {
+        let cost = mass / 3 - 2;
+        let added_cost = fuel_cost(cost);
+        if added_cost > 0 {
+            cost + added_cost
+        } else {
+            cost
+        }
+    }
 }
 
 
