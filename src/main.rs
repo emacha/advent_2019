@@ -9,7 +9,7 @@ fn main() -> Result<()> {
 
     let mut fuel_sum = 0;
     for module_mass in input.lines() {
-        let value: u64 = module_mass.unwrap().parse().unwrap();
+        let value: i64 = module_mass.unwrap().parse().unwrap();
         fuel_sum += fuel_cost(value)
     }
 
