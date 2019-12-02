@@ -45,7 +45,11 @@ pub fn intcode(input: String) -> String {
     out
 }
 
-
+pub fn new_intcode(noun: &str, verb: &str, code: String) -> String {
+    let new_code = format!("{},{},{},{}", &code[0..1], &noun,
+                           &verb,  &code[6..]);
+    new_code
+}
 
 #[cfg(test)]
 mod tests {
@@ -70,4 +74,12 @@ mod tests {
         assert_eq!(intcode("1,1,1,4,99,5,6,0,99".parse().unwrap()),
                    "30,1,1,4,2,5,6,0,99".parse::<String>().unwrap());
     }
+
+    #[test]
+    fn test_new_code() {
+        let input = String::from("0,1,2,3");
+        let new = new_intcode("99", "88", input);
+        assert_eq!(new, "0,99,88,3");
+    }
+
 }
