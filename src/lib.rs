@@ -15,7 +15,34 @@ pub fn fuel_cost(mass: i64) -> i64 {
 }
 
 pub fn intcode(input: String) -> String {
-    "".parse().unwrap()
+    let mut code: Vec<i32> = input.split(",").map(|x| x.parse().unwrap())
+        .collect();
+    let mut i = 0;
+    loop {
+        match code[i] {
+            1 => {
+                let s = code[code[i + 1] as usize] + code[code[i + 2] as usize];
+                let out_i = code[i + 3] as usize;
+                code[out_i] = s;
+                i = i + 4;
+            },
+            2 => {
+                let s = code[code[i + 1] as usize] * code[code[i + 2] as usize];
+                let out_i = code[i + 3] as usize;
+                code[out_i] = s;
+                i = i + 4;
+            },
+            99 => break,
+            _ => panic!("Unknown opcode!")
+        }
+    }
+    let mut out: String = String::new();
+    for part in code {
+        out.push_str(part.to_string().as_ref());
+        out.push(',')
+    }
+    out.pop();
+    out
 }
 
 
