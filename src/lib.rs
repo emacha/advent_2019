@@ -45,7 +45,7 @@ pub fn intcode(input: String) -> String {
     out
 }
 
-pub fn new_intcode(noun: &str, verb: &str, code: String) -> String {
+pub fn new_intcode(noun: &str, verb: &str, code: &String) -> String {
     let new_code = format!("{},{},{},{}", &code[0..1], &noun,
                            &verb,  &code[6..]);
     new_code
@@ -78,7 +78,7 @@ mod tests {
     #[test]
     fn test_new_code() {
         let input = String::from("0,1,2,3");
-        let new = new_intcode("99", "88", input);
+        let new = new_intcode("99", "88", &input);
         assert_eq!(new, "0,99,88,3");
     }
 
