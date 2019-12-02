@@ -14,7 +14,7 @@ pub fn fuel_cost(mass: i64) -> i64 {
     }
 }
 
-pub fn intcode(input: String) -> String {
+pub fn intcode(input: &String) -> String {
     let mut code: Vec<i32> = input.split(",").map(|x| x.parse().unwrap())
         .collect();
     let mut i = 0;
@@ -65,13 +65,13 @@ mod tests {
 
     #[test]
     fn test_intcode() {
-        assert_eq!(intcode("1,0,0,0,99".parse().unwrap()),
+        assert_eq!(intcode(&String::from("1,0,0,0,99")),
                    "2,0,0,0,99".parse::<String>().unwrap());
-        assert_eq!(intcode("2,3,0,3,99".parse().unwrap()),
+        assert_eq!(intcode(&String::from("2,3,0,3,99")),
                    "2,3,0,6,99".parse::<String>().unwrap());
-        assert_eq!(intcode("2,4,4,5,99,0".parse().unwrap()),
+        assert_eq!(intcode(&String::from("2,4,4,5,99,0")),
                    "2,4,4,5,99,9801".parse::<String>().unwrap());
-        assert_eq!(intcode("1,1,1,4,99,5,6,0,99".parse().unwrap()),
+        assert_eq!(intcode(&String::from("1,1,1,4,99,5,6,0,99")),
                    "30,1,1,4,2,5,6,0,99".parse::<String>().unwrap());
     }
 
