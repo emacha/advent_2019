@@ -1,18 +1,38 @@
-use advent_2019::fuel_cost;
-use std::io::{BufReader, Result, BufRead};
+use advent_2019::*;
+use std::io::{BufReader, Result, BufRead, Read};
 use std::fs::File;
+use std::fs;
+
+#[derive(Debug)]
+struct Memory {
+    noun: i32,
+    verb: i32,
+}
 
 
 fn main() -> Result<()> {
-    let input = File::open("inputs/day_1.txt")?;
-    let input = BufReader::new(input);
+    let code: String = fs::read_to_string("inputs/day_2.txt").unwrap().trim().parse().unwrap();
 
-    let mut fuel_sum = 0;
-    for module_mass in input.lines() {
-        let value: i64 = module_mass.unwrap().parse().unwrap();
-        fuel_sum += fuel_cost(value)
-    }
+    let search = || {
+        let mut out= Memory {noun: -1, verb: -1};
+        for noun in 0..=99 {
+            for verb in 0..=99 {
+                let new_code = intcode(&new_intcode(&noun.to_string(),
+                                                   &verb.to_string(),
+                                                   &code));
 
-    println!("{}", fuel_sum);
+                if &new_code[0..8] == "19690720" {
+                    return Memory {noun, verb};
+                }
+
+            }
+        }
+        out
+    };
+
+    let new_code = search();
+
+
+    println!("{:?}", new_code);
     Ok(())
 }
