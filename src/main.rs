@@ -1,6 +1,5 @@
 use advent_2019::*;
-use std::io::{BufReader, Result, BufRead, Read};
-use std::fs::File;
+use std::io::Result;
 use std::fs;
 
 #[derive(Debug)]
@@ -14,7 +13,6 @@ fn main() -> Result<()> {
     let code: String = fs::read_to_string("inputs/day_2.txt").unwrap().trim().parse().unwrap();
 
     let search = || {
-        let mut out= Memory {noun: -1, verb: -1};
         for noun in 0..=99 {
             for verb in 0..=99 {
                 let new_code = intcode(&new_intcode(&noun.to_string(),
@@ -27,12 +25,11 @@ fn main() -> Result<()> {
 
             }
         }
-        out
+        Memory {noun: -1, verb: -1}
     };
 
     let new_code = search();
-
-
+    
     println!("{:?}", new_code);
     Ok(())
 }
