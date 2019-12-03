@@ -51,6 +51,48 @@ pub fn new_intcode(noun: &str, verb: &str, code: &String) -> String {
     new_code
 }
 
+pub fn create_path(wire: &str) -> Vec<(i32, i32)> {
+    let mut path: Vec<(i32, i32)> = vec![(0, 0)];
+    for steps in wire.split(",") {
+        let direction: &str = &steps[..1];
+        let length: i32 = steps[1..].parse().unwrap();
+        match direction {
+            "U" => {
+                for _ in 0..length {
+                    if let Some((x, y)) = path.last() {
+                        path.push((*x, *y + 1));
+                    }
+                }
+            },
+            "D" => {
+                for _ in 0..length {
+                    if let Some((x, y)) = path.last() {
+                        path.push((*x, *y - 1));
+                    }
+                }
+            },
+            "R" => {
+                for _ in 0..length {
+                    if let Some((x, y)) = path.last() {
+                        path.push((*x + 1, *y));
+                    }
+                }
+            },
+            "L" => {
+                for _ in 0..length {
+                    if let Some((x, y)) = path.last() {
+                        path.push((*x - 1, *y));
+                    }
+                }
+            },
+            _ => panic!("Unknown direction!")
+        }
+    };
+    path
+}
+
+
+
 pub fn intersection_distance(wire1: &str, wire2: &str) -> i32 {
     0
 }
@@ -94,4 +136,10 @@ mod tests {
         "U98,R91,D20,R16,D67,R40,U7,R15,U6,R7"), 135);
     }
 
+    #[test]
+    fn test_create_path() {
+        assert_eq!(create_path("U2,L1"), vec![(0, 0),
+                                              (0, 1), (0, 2),
+                                              (-1, 2)])
+    }
 }
