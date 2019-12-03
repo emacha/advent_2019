@@ -1,4 +1,4 @@
-
+use std::i32::MAX;
 
 pub fn fuel_cost(mass: i64) -> i64 {
     if mass <= 0 {
@@ -113,7 +113,13 @@ pub fn intersection_distance(wire1: &str, wire2: &str) -> i32 {
     let path1 = create_path(wire1);
     let path2 = create_path(wire2);
 
-    0
+    let crossings = intersections(&path1, &path2);
+    let mut distance: i32 = MAX;
+    for (x, y) in crossings.iter() {
+        if (*x, *y) == (0, 0) {continue}
+        if distance > x.abs() + y.abs() {distance = x.abs() + y.abs()}
+    }
+    distance
 }
 
 #[cfg(test)]
