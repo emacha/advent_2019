@@ -51,6 +51,10 @@ pub fn new_intcode(noun: &str, verb: &str, code: &String) -> String {
     new_code
 }
 
+pub fn intersection_distance(wire1: &str, wire2: &str) -> i32 {
+    0
+}
+
 #[cfg(test)]
 mod tests {
     use crate::*;
@@ -80,6 +84,14 @@ mod tests {
         let input = String::from("0,1,2,3");
         let new = new_intcode("99", "88", &input);
         assert_eq!(new, "0,99,88,3");
+    }
+
+    #[test]
+    fn test_intersection_distance() {
+        assert_eq!(intersection_distance("R75,D30,R83,U83,L12,D49,R71,U7,L72",
+        "U62,R66,U55,R34,D71,R55,D58,R83"), 159);
+        assert_eq!(intersection_distance("R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51",
+        "U98,R91,D20,R16,D67,R40,U7,R15,U6,R7"), 135);
     }
 
 }
