@@ -99,6 +99,16 @@ pub fn create_path(wire: &str) -> Vec<(i32, i32)> {
     path
 }
 
+pub fn intersections(xs: &Vec<(i32, i32)>, ys: &Vec<(i32, i32)>) -> Vec<(i32, i32)> {
+    let mut cross: Vec<(i32, i32)> = vec![];
+    for x in xs.iter() {
+        for y in ys.iter() {
+            if x == y {cross.push(*x)}
+        }
+    }
+    cross
+}
+
 pub fn intersection_distance(wire1: &str, wire2: &str) -> i32 {
     let path1 = create_path(wire1);
     let path2 = create_path(wire2);
@@ -150,5 +160,12 @@ mod tests {
         assert_eq!(create_path("U2,L1"), vec![(0, 0),
                                               (0, 1), (0, 2),
                                               (-1, 2)])
+    }
+
+    #[test]
+    fn test_intersection() {
+        let xs = vec![(0, 0), (1, 1), (-1, 1)];
+        let ys = vec![(1, 1), (11, 1), (0, 0)];
+        assert_eq!(intersections(&xs, &ys), vec![(0, 0), (1, 1)])
     }
 }
