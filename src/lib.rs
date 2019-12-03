@@ -59,30 +59,38 @@ pub fn create_path(wire: &str) -> Vec<(i32, i32)> {
         match direction {
             "U" => {
                 for _ in 0..length {
+                    let mut coord = (0, 0);
                     if let Some((x, y)) = path.last() {
-                        path.push((*x, *y + 1));
+                        coord = (*x, *y + 1)
                     }
+                    path.push(coord);
                 }
             },
             "D" => {
                 for _ in 0..length {
+                    let mut coord = (0, 0);
                     if let Some((x, y)) = path.last() {
-                        path.push((*x, *y - 1));
+                        coord = (*x, *y - 1)
                     }
+                    path.push(coord);
                 }
             },
             "R" => {
                 for _ in 0..length {
+                    let mut coord = (0, 0);
                     if let Some((x, y)) = path.last() {
-                        path.push((*x + 1, *y));
+                        coord = (*x + 1, *y)
                     }
+                    path.push(coord);
                 }
             },
             "L" => {
                 for _ in 0..length {
+                    let mut coord = (0, 0);
                     if let Some((x, y)) = path.last() {
-                        path.push((*x - 1, *y));
+                        coord = (*x - 1, *y)
                     }
+                    path.push(coord);
                 }
             },
             _ => panic!("Unknown direction!")
@@ -91,9 +99,10 @@ pub fn create_path(wire: &str) -> Vec<(i32, i32)> {
     path
 }
 
-
-
 pub fn intersection_distance(wire1: &str, wire2: &str) -> i32 {
+    let path1 = create_path(wire1);
+    let path2 = create_path(wire2);
+
     0
 }
 
