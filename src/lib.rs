@@ -122,6 +122,41 @@ pub fn intersection_distance(wire1: &str, wire2: &str) -> i32 {
     distance
 }
 
+pub fn passes_rules(password: &i32) -> bool {
+    let mut checks: Vec<bool> = vec![];
+    let password_str = password.to_string();
+    let double_digits = |pass: &String| -> bool {
+        let mut last: char = "a".parse().unwrap();
+        for digit in pass.chars() {
+            if digit == last {
+                return true
+            } else {
+                last = digit;
+            }
+        }
+        false
+    };
+    let increasing = |pass: &String| -> bool {
+        let mut last: u8 = "0".parse().unwrap();
+        for digit in pass.chars() {
+            if digit as u8 >= last {
+                last = digit as u8;
+            } else {
+                return false
+            }
+        }
+        true
+    };
+
+    //checks.push((*password > 183564) & (*password < 657474));
+    checks.push(password_str.len() == 6);
+    checks.push(double_digits(&password_str));
+    checks.push(increasing(&password_str));
+
+    checks.iter().fold(true, |acc, x| acc & x)
+}
+
+
 #[cfg(test)]
 mod tests {
     use crate::*;
@@ -173,5 +208,13 @@ mod tests {
         let xs = vec![(0, 0), (1, 1), (-1, 1)];
         let ys = vec![(1, 1), (11, 1), (0, 0)];
         assert_eq!(intersections(&xs, &ys), vec![(0, 0), (1, 1)])
+    }
+
+    #[test]
+    fn test_password_rules() {
+        assert!(passes_rules(&111111));
+        assert!(!passes_rules(&123));  // less than 6
+        assert!(!passes_rules(&223450));
+        assert!(!passes_rules(&123789));
     }
 }
