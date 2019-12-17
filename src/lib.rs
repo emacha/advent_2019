@@ -142,10 +142,8 @@ pub fn passes_rules(password: &i32) -> bool {
 
         }
         lens.push(seq.len() + 1);
-        
         for len in lens.iter() {
-            if (*len > 1 as usize) & (*len % 2 != 0) {return false}
-            if *len > 1 as usize {return true}
+            if (*len == 2) | (*len == 4) | (*len == 6) {return true}
         }
         false
     };
