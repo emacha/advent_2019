@@ -126,13 +126,27 @@ pub fn passes_rules(password: &i32) -> bool {
     let mut checks: Vec<bool> = vec![];
     let password_str = password.to_string();
     let double_digits = |pass: &String| -> bool {
+        let mut lens = vec![];
         let mut last: char = "a".parse().unwrap();
+        let mut seq: String = String::new();
+
         for digit in pass.chars() {
+
             if digit == last {
-                return true
+                seq.push(digit);
             } else {
-                last = digit;
+                lens.push(seq.len() + 1);
+                seq = String::new();
             }
+            last = digit;
+
+        }
+        lens.push(seq.len() + 1);
+
+        println!("{:?}", lens);
+        for len in lens.iter() {
+            if (*len > 1 as usize) & (*len % 2 != 0) {return false}
+            if *len > 1 as usize {return true}
         }
         false
     };
@@ -213,8 +227,10 @@ mod tests {
     #[test]
     fn test_password_rules() {
         assert!(passes_rules(&111111));
-        assert!(!passes_rules(&123));  // less than 6
+        assert!(!passes_rules(&123));
         assert!(!passes_rules(&223450));
         assert!(!passes_rules(&123789));
+        assert!(!passes_rules(&123444));
+        assert!(passes_rules(&111122));
     }
 }
