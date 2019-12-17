@@ -143,7 +143,7 @@ pub fn passes_rules(password: &i32) -> bool {
         }
         lens.push(seq.len() + 1);
         for len in lens.iter() {
-            if (*len == 2) | (*len == 4) | (*len == 6) {return true}
+            if *len == 2 {return true}
         }
         false
     };
@@ -159,7 +159,6 @@ pub fn passes_rules(password: &i32) -> bool {
         true
     };
 
-    //checks.push((*password > 183564) & (*password < 657474));
     checks.push(password_str.len() == 6);
     checks.push(double_digits(&password_str));
     checks.push(increasing(&password_str));
@@ -223,7 +222,7 @@ mod tests {
 
     #[test]
     fn test_password_rules() {
-        assert!(passes_rules(&111111));
+        assert!(passes_rules(&113334));
         assert!(!passes_rules(&123));
         assert!(!passes_rules(&223450));
         assert!(!passes_rules(&123789));
